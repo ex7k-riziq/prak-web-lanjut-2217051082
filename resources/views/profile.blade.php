@@ -4,8 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tes</title>
+	<link rel="stylesheet" type="text/css" href="blade1.css">
 </head>
 <body>
+	<img src="profile1.jpeg" alt="Avatar">
+	<br>
 	<tr>
 		<td>Nama</td>
 		<td>:</td>
