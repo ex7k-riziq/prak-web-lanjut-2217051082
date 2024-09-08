@@ -1,0 +1,45 @@
+body {
+	font-family: ubuntu, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.kotakisi {
+    display: grid;
+    place-items: center;
+    grid-gap: 10px;
+    height: 40vh; 
+}
+
+.fotoprofil img{
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-top: 50px;
+}
+
+.identitas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 55px;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #51555a;
+    color: white;
+    text-align: center;
+    font-size: 26px;
+    transition: background-color 0.3s ease;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.identitas p {
+    margin: 0;
+    line-height: 1.5;
+}

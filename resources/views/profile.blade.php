@@ -4,28 +4,23 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tes</title>
-	<link rel="stylesheet" type="text/css" href="blade1.css">
+	<link href="{{ asset('css/blade1.css') }}" rel="stylesheet">
 </head>
 <body>
-	<img src="profile1.jpeg" alt="Avatar">
+	<div class="fotoprofil">
+		<img src="{{asset('images/profile1.jpeg')}}" alt="Avatar">
+	</div>
 	<br>
-	<tr>
-		<td>Nama</td>
-		<td>:</td>
-		<td><?= $nama ?></td>
-	</tr>
-	<br>
-	<tr>
-		<td>Kelas</td>
-		<td>:</td>
-		<td><?= $kelas ?></td>
-	</tr>
-	<br>
-	<tr>
-		<td>NPM</td>
-		<td>:</td>
-		<td><?= $npm ?></td>
-	</tr>
-	<br>
+	<div class="kotakisi">
+		<div class="identitas">
+			<p>Nama: <?= $nama ?></td>
+		</div>
+		<div class="identitas">
+			<p>Kelas: <?= $kelas ?></td>
+		</div>
+		<div class="identitas">
+			<p>NPM: <?= $npm ?></td>
+		</div>
+	</div>
 </body>
 </html>
