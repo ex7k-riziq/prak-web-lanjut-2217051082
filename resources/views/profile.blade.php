@@ -4,14 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tes</title>
-	<link href="{{ asset('css/blade1.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/blade1.css') }}" rel="stylesheet">
 </head>
 <body>
-	<div class="fotoprofil">
-		<img src="{{asset('images/profile1.jpeg')}}" alt="Avatar">
-	</div>
-	<br>
 	<div class="kotakisi">
+		<img src="{{asset('assets/img/profile2.png')}}" alt="Avatar">
 		<div class="identitas">
 			<p>Nama: <?= $nama ?></td>
 		</div>

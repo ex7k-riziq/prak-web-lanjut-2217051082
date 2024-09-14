@@ -1,6 +1,4 @@
 body {
-	font-family: ubuntu, sans-serif;
-    text-align: center;
     margin: 0;
     padding: 0;
 }
@@ -8,11 +6,13 @@ body {
 .kotakisi {
     display: grid;
     place-items: center;
-    grid-gap: 10px;
+    text-align: center;
+    grid-gap: 20px;
     height: 40vh; 
+    font-family: ubuntu, sans-serif;
 }
 
-.fotoprofil img{
+.kotakisi img{
     width: 350px;
     height: 350px;
     border-radius: 50%;
@@ -29,7 +29,7 @@ body {
     height: 55px;
     padding: 10px;
     border: 2px solid #000000;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: #51555a;
     color: white;
     text-align: center;
@@ -41,5 +41,5 @@ body {
 
 .identitas p {
     margin: 0;
-    line-height: 1.5;
+    line-height: 2;
 }
