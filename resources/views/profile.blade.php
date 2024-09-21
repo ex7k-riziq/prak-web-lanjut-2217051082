@@ -10,13 +10,13 @@
 	<div class="kotakisi">
 		<img src="{{asset('assets/img/profile2.png')}}" alt="Avatar">
 		<div class="identitas">
-			<p>Nama: <?= $nama ?></td>
+			<p>Nama: {{ $nama }}</p>
 		</div>
 		<div class="identitas">
-			<p>Kelas: <?= $kelas ?></td>
+			<p>Kelas: {{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
 		</div>
 		<div class="identitas">
-			<p>NPM: <?= $npm ?></td>
+			<p>NPM: {{ $npm }}</p>
 		</div>
 	</div>
 </body>
