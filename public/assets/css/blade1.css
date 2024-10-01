@@ -43,3 +43,19 @@ body {
     margin: 0;
     line-height: 2;
 }
+
+.tabeluser {
+    border-collapse: collapse;
+    width: 70%;
+    line-height: 2;
+}
+
+.tabeluser td, th{
+    border: 1px solid;
+    padding: 8px;
+}
+
+.tabeluser th{
+    background-color: #51555a;
+    color: white;
+}
