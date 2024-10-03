@@ -29,14 +29,21 @@ class UserController extends Controller
         return view('create_user', $data);
     }
 
-    public function index(){
+    public function index()
+    {
+        $users = UserModel::join('kelas', 'kelas.id', '=', 'user.kelas_id')
+                ->select('user.*', 'kelas.nama_kelas as nama_kelas')
+                ->get();
+
+     
         $data = [
             'title' => 'List User',
-            'users' => $this->userModel->getUser(),
+            'users' => $users
         ];
 
         return view('list_user', $data);
     }
+
 
     public function profile($nama = "", $kelas = "", $npm = "")
     {
@@ -48,13 +55,42 @@ class UserController extends Controller
         return view('profile', $data);
     }
 
-    public function store(Request $request){ 
-        $this->userModel->create([ 
-            'nama' => $request->input('nama'), 
-            'npm' => $request->input('npm'), 
-            'kelas_id' => $request->input('kelas_id'),
-        ]);
+    public function show($id){
+        $user = $this->userModel->getUser($id);
+
+        $data = [
+            'title' => 'Profile',
+            'user' => $user  
+        ];
     
-        return redirect()->to('user/list_user');
+        return view('profile', $data);
+    }
+    
+    
+
+    public function store(Request $request){ 
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'npm' => 'required|string|max:255',
+            'kelas_id' => 'required|integer',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoPath = $foto->move(('upload/img'), $foto);
+        } else {
+            $fotoPath = null;
+        }
+
+        $this->userModel->create([
+            'nama' => $request->input('nama'),
+            'npm' => $request->input('npm'),
+            'kelas_id' => $request->input('kelas_id'),
+            'foto' => $fotoPath, 
+        ]);
+
+        return redirect()->to('/user/list_user')->with('success', 'user berhasil ditambahkan');            
     }
 }
