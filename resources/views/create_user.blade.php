@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="kotakisi">
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <p>
         <label for="nama">Nama:</label>
         <input type="text" id="nama" name="nama"><br>
         </p>
         <p>
-        <label for="kelas">Kelas :</label>
+        <label for="kelas">Kelas:</label>
         <select name="kelas_id" id="kelas_id">
             @foreach ($kelas as $kelasItem)
             <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
@@ -17,8 +17,12 @@
         </select>
         </p>
         <p>
-        <label for="npm">NPM : </label>
+        <label for="npm">NPM:</label>
         <input type="text" id="npm" name="npm"><br>
+        </p>
+        <p>
+        <label for="foto">Foto:</label><br>
+        <input type="file" id="foto" name="foto"><br>
         </p>
         <p>
         <button type="submit">Submit</button>

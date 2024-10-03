@@ -59,3 +59,23 @@ body {
     background-color: #51555a;
     color: white;
 }
+
+.tombol {
+    color: white;
+    background-color: darkblue;
+    padding: 15px 30px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 14px;
+}
+
+.tombolcek {
+    color: white;
+    background-color: #51555a;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 12px;
+}
