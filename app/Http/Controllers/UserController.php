@@ -29,6 +29,20 @@ class UserController extends Controller
         return view('create_user', $data);
     }
 
+    public function destroy($id){
+        $user = UserModel::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('list_user')->with('Sukses', 'Pengguna telah dihapus');
+    }
+
+    public function edit($id){
+        $user = UserModel::findOrFail($id);
+        $kelas = $this->kelasModel->getKelas();
+        $title = 'Edit User';
+        return view('edit_user', compact('user', 'kelas', 'title'));
+    }
+
     public function index()
     {
         $users = UserModel::join('kelas', 'kelas.id', '=', 'user.kelas_id')
@@ -56,14 +70,12 @@ class UserController extends Controller
     }
 
     public function show($id){
-        $user = $this->userModel->getUser($id);
+        $user = UserModel::findOrFail($id); 
+        $kelas = KelasModel::find($user->kelas_id); 
 
-        $data = [
-            'title' => 'Profile',
-            'user' => $user  
-        ];
-    
-        return view('profile', $data);
+        $title = 'Detail ' . $user->nama; 
+
+        return view('profile', compact('user', 'kelas', 'title'));
     }
     
     
@@ -91,6 +103,24 @@ class UserController extends Controller
             'foto' => $fotoPath, 
         ]);
 
-        return redirect()->to('/user/list_user')->with('success', 'user berhasil ditambahkan');            
+        return redirect()->route('list_user')->with('Sukses', 'Pengguna berhasil ditambahkan');            
+    }
+
+    public function update(Request $request, $id){
+        $user = UserModel::findOrFail($id);
+
+        $user->nama = $request->nama;
+        $user->kelas_id = $request->kelas_id;
+        $user->npm = $request->npm;
+
+        if ($request->hasFile('foto')) {
+            $fileName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('uploads'), $fileName);
+            $user->foto = 'uploads/' . $fileName;
+        }
+
+        $user->save();
+
+        return redirect()->route('list_user')->with('Sukses', 'Pengguna telah diperbarui');
     }
 }
