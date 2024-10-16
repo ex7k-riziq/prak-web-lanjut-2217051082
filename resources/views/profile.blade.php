@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="kotakisi">
-        <img src="{{ asset($user->foto) }}" alt="Avatar">
+        <img src="{{ asset('storage/uploads/' . $user->foto) }}" alt="Avatar">
         <div class="identitas">
         <p>Nama: {{ $user->nama }}</p>
         </div>
