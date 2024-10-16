@@ -83,43 +83,55 @@ class UserController extends Controller
     public function store(Request $request){ 
 
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'npm' => 'required|string|max:255',
-            'kelas_id' => 'required|integer',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama' => 'required',
+            'npm' => 'required',
+            'kelas_id' => 'required',
+            'foto' => 'image|file|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fotoPath = $foto->move(('upload/img'), $foto);
-        } else {
-            $fotoPath = null;
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('uploads', $filename); 
+
+            $this->userModel->create([
+                'nama' => $request->input('nama'),
+                'npm' => $request->input('npm'),
+                'kelas_id' => $request->input('kelas_id'),
+                'foto' => $filename,
+            ]);
         }
-
-        $this->userModel->create([
-            'nama' => $request->input('nama'),
-            'npm' => $request->input('npm'),
-            'kelas_id' => $request->input('kelas_id'),
-            'foto' => $fotoPath, 
-        ]);
-
+        
         return redirect()->route('list_user')->with('Sukses', 'Pengguna berhasil ditambahkan');            
     }
 
     public function update(Request $request, $id){
         $user = UserModel::findOrFail($id);
 
-        $user->nama = $request->nama;
-        $user->kelas_id = $request->kelas_id;
-        $user->npm = $request->npm;
+    $request->validate([
+        'nama' => 'required',
+        'npm' => 'required',
+        'kelas_id' => 'required',
+        'foto' => 'image|file|max:2048',
+    ]);
 
-        if ($request->hasFile('foto')) {
-            $fileName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('uploads'), $fileName);
-            $user->foto = 'uploads/' . $fileName;
+    $user->nama = $request->input('nama');
+    $user->kelas_id = $request->input('kelas_id');
+    $user->npm = $request->input('npm');
+
+    if ($request->hasFile('foto')) {
+        if ($user->foto && \Storage::disk('public')->exists('uploads/' . $user->foto)) {
+            \Storage::disk('public')->delete('uploads/' . $user->foto);
         }
 
-        $user->save();
+        $file = $request->file('foto');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('uploads', $filename, 'public');
+
+        $user->foto = $filename;
+    }
+
+    $user->save();
 
         return redirect()->route('list_user')->with('Sukses', 'Pengguna telah diperbarui');
     }
