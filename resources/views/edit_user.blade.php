@@ -21,8 +21,29 @@
         </select>
         </p>
         <p>
-        <label for="npm">NPM:</label>
-        <input type="text" id="npm" name="npm" value="{{ old('npm', $user->npm) }}"><br>
+        <label for="jurusan">Jurusan:</label>
+        <select name="jurusan" id="jurusan" required>
+            <option value="fisika" {{ $user->jurusan == 'fisika' ? 'selected' : '' }}>Fisika</option>
+            <option value="kimia" {{ $user->jurusan == 'kimia' ? 'selected' : '' }}>Kimia</option>
+            <option value="biologi" {{ $user->jurusan == 'biologi' ? 'selected' : '' }}>Biologi</option>
+            <option value="matematika" {{ $user->jurusan == 'matematika' ? 'selected' : '' }}>Matematika</option>
+            <option value="ilmu komputer" {{ $user->jurusan == 'ilmu komputer' ? 'selected' : '' }}>Ilmu Komputer</option>
+        </select>
+        </p>
+        <p>
+        <label for="semester">Semester:</label>
+        <input type="number" id="semester" name="semester" value="{{ old('semester', $user->semester) }}" min="1" max="14" required><br>
+        </p>
+        <p>
+        <label for="fakultas">Fakultas:</label>
+        <select name="fakultas_id" id="fakultas_id" required>
+            @foreach ($fakultas as $fakultasItem)
+                <option value="{{ $fakultasItem->id }}" 
+                    {{ $fakultasItem->id == $user->fakultas_id ? 'selected' : '' }}>
+                    {{ $fakultasItem->nama_fakultas }}
+                </option>
+            @endforeach
+        </select>
         </p>
         <p>
         <label for="foto">Foto:</label><br>

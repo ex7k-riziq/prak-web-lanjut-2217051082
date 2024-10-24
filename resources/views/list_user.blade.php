@@ -6,9 +6,12 @@
         <table class="tabeluser"> 
             <thead> 
                 <tr> 
+                    <th>Foto</th>
                     <th>Nama</th>
-                    <th>NPM</th>
                     <th>Kelas</th>
+                    <th>Jurusan</th>
+                    <th>Semester</th>
+                    <th>Fakultas</th>
                     <th>Operasi</th>
                 </tr>
             </thead>
@@ -16,9 +19,18 @@
                 @if ($users && count($users) > 0)
                     @foreach ($users as $user)
                         <tr> 
+                            <td>
+                            @if ($user['foto'])
+                                <img src="{{ asset('storage/uploads/' . $user['foto']) }}" alt="User Photo" width="100" height="100">
+                            @else
+                                Tidak ada foto
+                            @endif
+                            </td>
                             <td>{{ $user['nama'] }}</td> 
-                            <td>{{ $user['npm'] }}</td> 
-                            <td>{{ $user['nama_kelas'] }}</td> 
+                            <td>{{ $user->kelas->nama_kelas }}</td>
+                            <td>{{ $user['jurusan'] }}</td>
+                            <td>{{ $user['semester'] }}</td>
+                            <td>{{ $user->fakultas->nama_fakultas }}</td>
                             <td>
                                 <a href="{{ route('users.show', $user->id) }}" class="tombolcek">Detail</a>
                                 <br>
@@ -36,7 +48,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="4">Tidak ada data pengguna.</td>
+                        <td colspan="7">Tidak ada data pengguna.</td>
                     </tr>
                 @endif
             </tbody> 

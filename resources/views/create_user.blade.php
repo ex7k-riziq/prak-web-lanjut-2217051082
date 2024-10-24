@@ -17,8 +17,26 @@
         </select>
         </p>
         <p>
-        <label for="npm">NPM:</label>
-        <input type="text" id="npm" name="npm"><br>
+        <label for="jurusan">Jurusan:</label>
+        <select name="jurusan" id="jurusan" required>
+            <option value="fisika">Fisika</option>
+            <option value="kimia">Kimia</option>
+            <option value="biologi">Biologi</option>
+            <option value="matematika">Matematika</option>
+            <option value="ilmu komputer">Ilmu Komputer</option>
+        </select>
+        </p>
+        <p>
+        <label for="semester">Semester:</label>
+        <input type="number" id="semester" name="semester" min="1" max="14" required><br>
+        </p>
+        <p>
+        <label for="fakultas">Fakultas:</label>
+        <select name="fakultas_id" id="fakultas_id" required>
+            @foreach ($fakultas as $fakultasItem)
+            <option value="{{ $fakultasItem->id }}">{{ $fakultasItem->nama_fakultas }}</option>
+            @endforeach
+        </select>
         </p>
         <p>
         <label for="foto">Foto:</label><br>

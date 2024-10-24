@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('npm');
             $table->foreignId('kelas_id')->constrained();
             $table->string('foto')->nullable();
+            $table->enum('jurusan', ['fisika', 'kimia', 'biologi', 'matematika', 'ilmu komputer']);
+            $table->integer('semester');
+            $table->foreignId('fakultas_id')->constrained();
             $table->timestamps();
         });
     }
