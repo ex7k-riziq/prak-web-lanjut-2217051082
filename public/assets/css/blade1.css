@@ -8,7 +8,7 @@ body {
     place-items: center;
     text-align: center;
     grid-gap: 20px;
-    height: 40vh; 
+    height: 50vh; 
     font-family: ubuntu, sans-serif;
 }
 
@@ -26,14 +26,14 @@ body {
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 55px;
+    height: 28px;
     padding: 10px;
     border: 2px solid #000000;
     border-radius: 4px;
     background-color: #51555a;
     color: white;
     text-align: center;
-    font-size: 26px;
+    font-size: 16px;
     transition: background-color 0.3s ease;
     text-overflow: ellipsis;
     white-space: nowrap;

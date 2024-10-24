@@ -6,24 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\UserModel;
 use App\Models\KelasModel;
 use App\Http\Requests\UserRequest;
+use App\Models\FakultasModel;
 
 class UserController extends Controller
 {
     public $userModel;
     public $kelasModel;
+    public $fakultasModel;
 
     public function __construct(){
         $this->userModel = new UserModel();
         $this->kelasModel = new KelasModel();
+        $this->fakultasModel = new FakultasModel();
     }
 
     public function create()
     {
         $kelas = $this->kelasModel->getKelas();
+        $fakultas = $this->fakultasModel->getFakultas();
 
         $data = [
             'title' => 'Create User',
             'kelas' => $kelas,
+            'fakultas' => $fakultas,
         ];
 
         return view('create_user', $data);
@@ -39,16 +44,18 @@ class UserController extends Controller
     public function edit($id){
         $user = UserModel::findOrFail($id);
         $kelas = $this->kelasModel->getKelas();
+        $fakultas = $this->fakultasModel->getFakultas();
         $title = 'Edit User';
-        return view('edit_user', compact('user', 'kelas', 'title'));
+        return view('edit_user', compact('user', 'kelas', 'fakultas', 'title'));
     }
 
     public function index()
     {
-        $users = UserModel::join('kelas', 'kelas.id', '=', 'user.kelas_id')
-                ->select('user.*', 'kelas.nama_kelas as nama_kelas')
-                ->get();
+        // $users = UserModel::join('kelas', 'kelas.id', '=', 'user.kelas_id', 'fakultas', 'fakultas.id', '=', 'user.fakultas_id')
+        //         ->select('user.*', 'kelas.nama_kelas as nama_kelas', 'fakultas.nama_fakultas as nama_fakultas')
+        //         ->get();
 
+        $users = UserModel::get();
      
         $data = [
             'title' => 'List User',
@@ -59,12 +66,14 @@ class UserController extends Controller
     }
 
 
-    public function profile($nama = "", $kelas = "", $npm = "")
+    public function profile($nama = "", $semester = "", $kelas = "", $fakultas = "", $jurusan = "")
     {
         $data = [
             'nama' => $nama,
+            'semester' => $semester,
             'kelas' => $kelas,
-            'npm' => $npm,
+            'fakultas' => $fakultas,
+            'jurusan' => $jurusan,
         ];
         return view('profile', $data);
     }
@@ -72,10 +81,11 @@ class UserController extends Controller
     public function show($id){
         $user = UserModel::findOrFail($id); 
         $kelas = KelasModel::find($user->kelas_id); 
+        $fakultas = FakultasModel::find($user->fakultas_id);
 
         $title = 'Detail ' . $user->nama; 
 
-        return view('profile', compact('user', 'kelas', 'title'));
+        return view('profile', compact('user', 'kelas', 'fakultas', 'title'));
     }
     
     
@@ -84,9 +94,11 @@ class UserController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'npm' => 'required',
+            'semester' => 'required|min:1|max:14',
             'kelas_id' => 'required',
-            'foto' => 'image|file|max:2048',
+            'fakultas_id' => 'required',
+            'jurusan' => 'required|in:fisika,kimia,biologi,matematika,ilmu komputer',
+            'foto' => 'image|file|max:4096',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -96,8 +108,10 @@ class UserController extends Controller
 
             $this->userModel->create([
                 'nama' => $request->input('nama'),
-                'npm' => $request->input('npm'),
+                'semester' => $request->input('semester'),
                 'kelas_id' => $request->input('kelas_id'),
+                'fakultas_id' => $request->input('fakultas_id'),
+                'jurusan' => $request->input('jurusan'),
                 'foto' => $filename,
             ]);
         }
@@ -110,14 +124,18 @@ class UserController extends Controller
 
     $request->validate([
         'nama' => 'required',
-        'npm' => 'required',
+        'semester' => 'required|min:1|max:14',
         'kelas_id' => 'required',
-        'foto' => 'image|file|max:2048',
+        'fakultas_id' => 'required',
+        'jurusan' => 'required|in:fisika,kimia,biologi,matematika,ilmu komputer',
+        'foto' => 'image|file|max:4096',
     ]);
 
     $user->nama = $request->input('nama');
+    $user->semester = $request->input('semester');
     $user->kelas_id = $request->input('kelas_id');
-    $user->npm = $request->input('npm');
+    $user->fakultas_id = $request->input('fakultas_id');
+    $user->jurusan = $request->input('jurusan');
 
     if ($request->hasFile('foto')) {
         if ($user->foto && \Storage::disk('public')->exists('uploads/' . $user->foto)) {
